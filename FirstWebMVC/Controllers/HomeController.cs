@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FirstWebMVC.Models;
+using FirstWebMVC.services;
+using FirstWebMVC.ViewModels;
 
 namespace FirstWebMVC.Controllers;
 
@@ -8,14 +10,25 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    readonly IProductsService _productsService;
+
+    public HomeController(ILogger<HomeController> logger,
+                            IProductsService productsService)
     {
         _logger = logger;
+        _productsService = productsService;
     }
+    
 
     public IActionResult Index()
     {
-        return View();
+        
+        //call service
+        var viewModel = new HomeViewModel
+        {
+            Products = _productsService.GetProducts()
+        };
+        return View(viewModel);
     }
 
     public IActionResult Privacy()

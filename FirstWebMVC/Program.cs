@@ -1,3 +1,6 @@
+using FirstWebMVC.repositories;
+using FirstWebMVC.services;
+
 namespace FirstWebMVC;
 
 public class Program
@@ -8,6 +11,8 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddSingleton<IProductsService, ProductsService>();
+        builder.Services.AddSingleton<IProductsRepository, ProductsRepository>();
 
         var app = builder.Build();
 
